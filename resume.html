@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hunter Reaux — Software Engineer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #00e5ff;
+      --accent2: #ff3c6e;
+      --text: #e8e8f0;
+      --muted: #666680;
+      --font-display: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.4;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 5rem 0 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-label {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.1s;
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: -0.03em;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.2s;
+    }
+
+    h1 span {
+      display: block;
+      -webkit-text-stroke: 1px var(--accent);
+      color: transparent;
+    }
+
+    .tagline {
+      margin-top: 1.5rem;
+      font-size: 13px;
+      color: var(--muted);
+      max-width: 540px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.35s;
+    }
+
+    .header-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.45s;
+    }
+
+    .header-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      padding-bottom: 2px;
+    }
+
+    .header-links a:hover { color: var(--accent); border-color: var(--accent); }
+
+    .status-dot {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 11px;
+      color: #4cff91;
+      margin-top: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.55s;
+    }
+
+    .status-dot::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #4cff91;
+      box-shadow: 0 0 8px #4cff91;
+      animation: pulse 2s infinite;
+    }
+
+    section {
+      padding: 3.5rem 0;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards;
+    }
+
+    section:nth-child(1) { animation-delay: 0.5s; }
+    section:nth-child(2) { animation-delay: 0.6s; }
+    section:nth-child(3) { animation-delay: 0.7s; }
+    section:nth-child(4) { animation-delay: 0.8s; }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), transparent);
+    }
+
+    .job {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.3rem 2rem;
+      padding: 1.8rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .job:first-of-type { border-top: none; padding-top: 0; }
+
+    .job-title {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .job-company { font-size: 12px; color: var(--accent); margin-top: 2px; }
+    .job-location { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+    .job-date {
+      font-size: 11px;
+      color: var(--muted);
+      text-align: right;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .job-desc {
+      grid-column: 1 / -1;
+      color: var(--muted);
+      font-size: 12.5px;
+      margin-top: 0.8rem;
+      padding-left: 1rem;
+      border-left: 2px solid var(--border);
+    }
+
+    .job-desc li { list-style: none; padding: 0.25rem 0; }
+    .job-desc li::before { content: '→ '; color: var(--accent2); }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .skill-group {
+      background: var(--bg);
+      padding: 1.2rem 1.4rem;
+      transition: background 0.2s;
+    }
+
+    .skill-group:hover { background: var(--surface); }
+
+    .skill-group-name {
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.7rem;
+    }
+
+    .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+
+    .tag {
+      font-size: 11px;
+      color: var(--muted);
+      background: var(--border);
+      padding: 2px 8px;
+      border-radius: 2px;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .tag:hover { color: var(--text); background: #2a2a3e; }
+
+    .edu-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      padding: 1rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .edu-row:first-of-type { border-top: none; padding-top: 0; }
+
+    .edu-degree { font-family: var(--font-display); font-weight: 700; font-size: 1rem; }
+    .edu-school { font-size: 12px; color: var(--accent); margin-top: 2px; }
+    .edu-detail { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .edu-year { font-size: 11px; color: var(--muted); white-space: nowrap; }
+
+    footer {
+      padding: 2.5rem 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .footer-name { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; letter-spacing: -0.02em; }
+    .footer-copy { font-size: 11px; color: var(--muted); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    @media (max-width: 600px) {
+      .job { grid-template-columns: 1fr; }
+      .job-date { text-align: left; }
+      .edu-row { flex-direction: column; gap: 0.3rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <p class="header-label">// Software Engineer & DevOps</p>
+    <h1>
+      Hunter Reaux
+      <span>Engineer.</span>
+    </h1>
+    <p class="tagline">
+      Full-stack & DevOps engineer with 6+ years at Michelin North America.
+      Building scalable enterprise platforms, shipping reliable software, and bridging development with infrastructure.
+    </p>
+    <div class="header-links">
+      <a href="tel:8285578577">828-557-8577</a>
+      <a href="mailto:hunterreaux@gmail.com">hunterreaux@gmail.com</a>
+      <a href="https://linkedin.com/in/hunter" target="_blank">linkedin.com/in/hunter</a>
+    </div>
+    <p class="status-dot">Open to new opportunities</p>
+  </header>
+
+  <main>
+
+    <section>
+      <p class="section-label">Experience</p>
+
+      <div class="job">
+        <div>
+          <div class="job-title">Senior Software Engineer</div>
+          <div class="job-company">Michelin North America</div>
+          <div class="job-location">Greenville, SC</div>
+        </div>
+        <div class="job-date">June 2023 — Present</div>
+        <ul class="job-desc">
+          <li>Maintain Angular application used on production lines at Michelin tire retreading plants worldwide</li>
+          <li>Model and maintain MySQL and SQL Server relational databases supporting global retreading workflows</li>
+          <li>Major contributor to modular enterprise web platform for user management, access control, and business process automation</li>
+          <li>Implemented Google Analytics metrics across the frontend, improving visibility and analytic tracking</li>
+          <li>Diagnosed and resolved critical production bugs, reducing user-reported issues and improving reliability</li>
+          <li>Led team in Lean and Agile practices, influencing consistent effort tracking adoption across the org</li>
+          <li>Worked with Docker and Kubernetes; supported CI/CD pipelines contributing to smooth deployments</li>
+          <li>Contributed to system architecture decisions; implemented RESTful services in a microservices platform adhering to clean architecture principles</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div>
+          <div class="job-title">DevOps Engineer</div>
+          <div class="job-company">Michelin North America</div>
+          <div class="job-location">Greenville, SC</div>
+        </div>
+        <div class="job-date">June 2021 — June 2023</div>
+        <ul class="job-desc">
+          <li>Led enterprise-wide Apigee training, accelerating adoption and improving API best practices company-wide</li>
+          <li>Configured and maintained API proxies, authentication policies, and traffic routing using Apigee Edge</li>
+          <li>Contributed to CI/CD pipelines with GitLab CI to improve automated deployment processes</li>
+          <li>Managed user and app-level access across iOS App Store Connect and Google Play Console</li>
+          <li>Monitored system performance across teams using Splunk</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div>
+          <div class="job-title">Software Engineering Intern</div>
+          <div class="job-company">Michelin North America</div>
+          <div class="job-location">Greenville, SC</div>
+        </div>
+        <div class="job-date">Jan. 2019 — Dec. 2019</div>
+        <ul class="job-desc">
+          <li>Designed and built a document search application in VB.NET for electrical schematics and CAD files</li>
+          <li>Maintained and improved legacy VBA applications, adding features and resolving long-standing issues</li>
+          <li>Developed operator-facing screens at a passenger tire plant using OSIsoft PI for real-time production metrics</li>
+        </ul>
+      </div>
+
+      <div class="job">
+        <div>
+          <div class="job-title">Civil Engineering Research Assistant</div>
+          <div class="job-company">WISER — Wildfire Interdisciplinary Smoke Emissions Research</div>
+          <div class="job-location">Anderson, SC</div>
+        </div>
+        <div class="job-date">May 2019 — Nov. 2019</div>
+        <ul class="job-desc">
+          <li>Contributed to a government-funded study analyzing wildfire ember exposure and ignition risks by roof shape</li>
+          <li>Executed wind tunnel experiments using scale model homes under a Clemson Civil Engineering professor</li>
+          <li>Collected and analyzed ignition data to provide fire-resistant architectural recommendations</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Technical Skills</p>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <div class="skill-group-name">Languages</div>
+          <div class="skill-tags">
+            <span class="tag">Python</span>
+            <span class="tag">TypeScript</span>
+            <span class="tag">JavaScript</span>
+            <span class="tag">Java</span>
+            <span class="tag">SQL</span>
+            <span class="tag">HTML/CSS</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Frameworks</div>
+          <div class="skill-tags">
+            <span class="tag">Angular</span>
+            <span class="tag">React</span>
+            <span class="tag">Spring Boot</span>
+            <span class="tag">Node.js</span>
+            <span class="tag">REST APIs</span>
+            <span class="tag">JUnit</span>
+            <span class="tag">Maven</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Databases</div>
+          <div class="skill-tags">
+            <span class="tag">MySQL</span>
+            <span class="tag">SQL Server</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">DevOps & Infra</div>
+          <div class="skill-tags">
+            <span class="tag">Docker</span>
+            <span class="tag">Kubernetes</span>
+            <span class="tag">GitLab CI</span>
+            <span class="tag">Apigee</span>
+            <span class="tag">Splunk</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Developer Tools</div>
+          <div class="skill-tags">
+            <span class="tag">Git / GitLab</span>
+            <span class="tag">GitHub Copilot</span>
+            <span class="tag">IntelliJ</span>
+            <span class="tag">Visual Studio</span>
+            <span class="tag">DBeaver</span>
+            <span class="tag">OSIsoft PI</span>
+          </div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-name">Platforms</div>
+          <div class="skill-tags">
+            <span class="tag">App Store Connect</span>
+            <span class="tag">Google Play Console</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <p class="section-label">Education</p>
+      <div class="edu-row">
+        <div>
+          <div class="edu-degree">B.S. Computer Engineering</div>
+          <div class="edu-school">Clemson University — Clemson, SC</div>
+          <div class="edu-detail">Minor in Mathematical Sciences</div>
+        </div>
+        <div class="edu-year">May 2021</div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="footer-name">Hunter Reaux</div>
+    <div class="footer-copy">hunterreaux@gmail.com &nbsp;·&nbsp; 828-557-8577</div>
+  </footer>
+
+</div>
+</body>
+</html>
